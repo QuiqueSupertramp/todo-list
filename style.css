@@ -3,37 +3,104 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border: 1px solid black;
 }
 
-/* VARIABLES */
+/* VARIABLES-------------------------------------------------- */
 :root {
-    --shadow: 2px 2px 2px rgb(0, 0, 0, 0.25), -2px -2px 2px rgb(255, 255, 255, 0,25);
+  --color-primary: #7e9fce;
+  --color-secondary: #e8e8e8;
+  --color-tertiary: #F3F5F8;
+  --color-grey: #61646e;
+  --font-roboto: "Roboto", sans-serif;
+  --font-robotoCondensed: "Roboto Condensed", sans-serif;
+  --shadow: 2px 2px 2px rgb(0, 0, 0, 0.25),
+    -2px -2px 2px rgb(255, 255, 255, 0.25);
+  --innerShadow: inset 2px 2px 2px rgb(0, 0, 0, 0.25),
+    inset -2px -2px 2px rgb(255, 255, 255, 0.25);
 }
 
+/* BUTTONS---------------------------------------------------------- */
 .btn {
-    border: none;
-    outline: none;
-    box-shadow: var(--shadow)
+  border: none;
+  outline: none;
+  box-shadow: var(--shadow);
+  background-color: inherit;
+  border-radius: 5px;
 }
 
 .btn-round {
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
 }
 
+.header__menuBtn {
+    margin: auto;
+}
+
+.folders__addBtn,
+.pendings__addBtn {
+  background-color: inherit;
+  font-size: 36px;
+  font-family: var(--font-roboto);
+  color: inherit;
+}
+
+.folders__button--active {
+  box-shadow: var(--innerShadow);
+}
+
+.folders__deleteBtn {
+    margin-left: 1.5rem;
+    padding: .3rem .6rem;
+    font-family: var(--font-robotoCondensed);
+    font-style: italic;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.material-icons-round {
+    font-size: 18px;
+}
+
+/* INPUTS--------------------------------------------------- */
+
+input {
+  border: none;
+  border-bottom: 1px solid var(--color-grey);
+  outline: none;
+  background-color: inherit;
+  opacity: 0.6;
+  font-family: var(--font-robotoCondensed);
+  font-style: italic;
+}
+
+input:focus {
+  opacity: 1;
+}
+
+input::placeholder {
+  color: var(--color-grey);
+  font-weight: 300;
+}
+
+/* BODY------------------------------------------------------ */
 body {
   background-color: #fff;
   display: grid;
   grid-template-columns: 24vw 1fr;
+  font-family: "Roboto", sans-serif;
 }
 
-/* TITULO Y MENU */
+/* HEADER --------------------------------------------------*/
 
 .header {
   height: 100vh;
-  padding: 0 1.5vw;
+  padding: 0.5rem 1.5vw;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
 }
 
 .header__title {
@@ -41,11 +108,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3vh;
-}
-
-.header__title h1 {
-  width: calc(100% - 4rem);
+  margin-bottom: 5vh;
 }
 
 .header__menuBtn {
@@ -53,7 +116,7 @@ body {
 }
 
 .folders {
-  height: calc(100% - 13vh);
+  height: calc(100% - 15vh);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -65,22 +128,104 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: .5rem;
-  padding: .5rem;
+  gap: 1rem .6rem;
+  padding: 0.5rem;
+
 }
 
 .folders__button {
-    flex-grow: 1;
-    height: 3rem;
+  flex-grow: 1;
+  color: var(--color-secondary);
+  font-family: var(--font-robotoCondensed);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem;
+}
+
+.folders__button h4 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.folders__button p {
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  padding-top: 0.2rem;
+  font-family: var(--font-roboto);
 }
 
 .folders__form {
   height: 12vh;
   display: flex;
   align-items: center;
+  padding: 0.5rem;
 }
 
 .folders__input {
-    width: calc(100% - 4rem);
-    margin-left: .5rem;
+  width: calc(100% - 4rem);
+  margin-left: 0.5rem;
+}
+
+
+
+
+/* MAIN----------------------------------------- */
+
+.main {
+    height: 100vh;
+    padding: 0.5rem 2.5vw;
+    /* color: var(--color-primary); */
+    background-color: var(--color-tertiary);
+}
+
+.main__title {
+    height: 9vh;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-bottom: 6vh;
+}
+
+.main__title h2 {
+    font-size: 2em;
+}
+
+.pendings {
+    height: calc(100% - 16vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3vh;
+    width: 40vw;
+}
+
+
+.pendings__task {
+    background-color: #fff;
+    font-family: var(--font-robotoCondensed);
+    font-style: italic;
+    padding: .3rem .6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pendings__icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2px;
+}
+    
+
+.pendings__form{
+    height: 9vh;
+}
+
+.completeds {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
