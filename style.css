@@ -1,0 +1,86 @@
+/* Reset. Para este proyecto usamos margin y padding 0 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1px solid black;
+}
+
+/* VARIABLES */
+:root {
+    --shadow: 2px 2px 2px rgb(0, 0, 0, 0.25), -2px -2px 2px rgb(255, 255, 255, 0,25);
+}
+
+.btn {
+    border: none;
+    outline: none;
+    box-shadow: var(--shadow)
+}
+
+.btn-round {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+}
+
+body {
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: 24vw 1fr;
+}
+
+/* TITULO Y MENU */
+
+.header {
+  height: 100vh;
+  padding: 0 1.5vw;
+}
+
+.header__title {
+  height: 9vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+
+.header__title h1 {
+  width: calc(100% - 4rem);
+}
+
+.header__menuBtn {
+  width: 3rem;
+}
+
+.folders {
+  height: calc(100% - 13vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3vh;
+}
+
+.folders__list {
+  height: calc(100% - 15vh);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: .5rem;
+  padding: .5rem;
+}
+
+.folders__button {
+    flex-grow: 1;
+    height: 3rem;
+}
+
+.folders__form {
+  height: 12vh;
+  display: flex;
+  align-items: center;
+}
+
+.folders__input {
+    width: calc(100% - 4rem);
+    margin-left: .5rem;
+}
