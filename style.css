@@ -7,7 +7,7 @@
 
 /* VARIABLES-------------------------------------------------- */
 :root {
-  --color-primary: #7e9fce;
+  --color-primary: #7E9FCE;
   --color-secondary: #e8e8e8;
   --color-tertiary: #F3F5F8;
   --color-grey: #61646e;
@@ -17,6 +17,7 @@
     -2px -2px 2px rgb(255, 255, 255, 0.25);
   --innerShadow: inset 2px 2px 2px rgb(0, 0, 0, 0.25),
     inset -2px -2px 2px rgb(255, 255, 255, 0.25);
+    --width-completeds: 33vw;
 }
 
 /* BUTTONS---------------------------------------------------------- */
@@ -35,11 +36,22 @@
 }
 
 .header__menuBtn {
-    margin: auto;
+    background-color: inherit;
+    color: var(--color-tertiary);
+    border: 1px solid var(--color-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .2rem;
+    display: none;
+}
+
+.header__menuBtn span {
+    font-size: 1.5rem;
 }
 
 .folders__addBtn,
-.pendings__addBtn {
+.to-do__addBtn {
   background-color: inherit;
   font-size: 36px;
   font-family: var(--font-roboto);
@@ -50,15 +62,24 @@
   box-shadow: var(--innerShadow);
 }
 
-.folders__deleteBtn {
-    margin-left: 1.5rem;
-    padding: .3rem .6rem;
+.folders__deleteBtn,
+.completeds_deleteBtn {
+    padding: .2em .9em .2em .7em;
+    font-size: 14px;
     font-family: var(--font-robotoCondensed);
-    font-style: italic;
     background-color: #fff;
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: .5em;
+}
+
+.completeds_deleteBtn {
+    background-color: #fff;
+    color: black;
+}
+
+.completeds_deleteBtn span {
+    color: #ff0000d8;
 }
 
 .material-icons-round {
@@ -86,12 +107,18 @@ input::placeholder {
   font-weight: 300;
 }
 
+.folders__input::placeholder {
+    color: rgb(78, 78, 94);
+    font-weight: 300;
+}
+
 /* BODY------------------------------------------------------ */
 body {
   background-color: #fff;
   display: grid;
   grid-template-columns: 24vw 1fr;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-robotoCondensed);
+  overflow: hidden;
 }
 
 /* HEADER --------------------------------------------------*/
@@ -100,7 +127,7 @@ body {
   height: 100vh;
   padding: 0.5rem 1.5vw;
   background-color: var(--color-primary);
-  color: var(--color-secondary);
+  color: var(--color-tertiary);
 }
 
 .header__title {
@@ -109,10 +136,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5vh;
-}
-
-.header__menuBtn {
-  width: 3rem;
+  font-family: var(--font-roboto);
 }
 
 .folders {
@@ -135,8 +159,7 @@ body {
 
 .folders__button {
   flex-grow: 1;
-  color: var(--color-secondary);
-  font-family: var(--font-robotoCondensed);
+  color: inherit;
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
@@ -183,28 +206,35 @@ body {
 .main__title {
     height: 9vh;
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     margin-bottom: 6vh;
 }
 
 .main__title h2 {
     font-size: 2em;
+    font-family: var(--font-roboto);
+    margin-right: 1.5rem;
 }
 
-.pendings {
+.to-do {
     height: calc(100% - 16vh);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 3vh;
-    width: 40vw;
+    width: calc(105% - var(--width-completeds));
+}
+
+.to-do__list {
+    height: calc(100% - 12vh);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
 }
 
 
-.pendings__task {
+.to-do__task {
     background-color: #fff;
-    font-family: var(--font-robotoCondensed);
     font-style: italic;
     padding: .3rem .6rem;
     display: flex;
@@ -212,7 +242,7 @@ body {
     align-items: center;
 }
 
-.pendings__icons {
+.to-do__icons {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -220,12 +250,58 @@ body {
 }
     
 
-.pendings__form{
-    height: 9vh;
+.to-do__form{
+    height: 12vh;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.to-do__input {
+    width: calc(100% - 4rem);
+    margin-left: 0.5rem;
 }
 
 .completeds {
+    background-color: var(--color-secondary);
     position: absolute;
-    right: 0;
-    top: 0;
+    max-height: 70vh;
+    width: var(--width-completeds);
+    top: 15vh;
+    right: -5vw;
+    padding: 2rem 7vw 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 15px;
+    box-shadow: var(--innerShadow);
+}
+
+.completeds__list {
+    height: 100%;
+    align-content: flex-start;
+    margin: 1.5rem 0;
+    padding-left: .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.completeds__task {
+    width: 100%;
+    display: flex;
+    gap: .4rem;
+    font-style: italic;
+    align-items: center;
+    font-size: 15px;
+}
+
+.completeds__task span {
+    font-size: 14px;
+}
+
+.completeds__form {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
 }

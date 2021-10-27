@@ -26,7 +26,7 @@
     <header class="header">
       <div class="header__title">
         <h1>TODO-LIST</h1>
-        <button class="btn header__menuBtn">
+        <button class="header__menuBtn">
           <span class="material-icons-round"> menu </span>
         </button>
       </div>
@@ -71,22 +71,22 @@
           <p>Delete folder</p>
         </button>
       </div>
-      <section class="pendings">
-        <div class="pendings__list">
-          <article class="pendings__task">
+      <section class="to-do">
+        <div class="to-do__list">
+          <article class="to-do__task">
             <p>Limpiar los platos</p>
-            <div class="pendings__icons">
+            <div class="to-do__icons">
               <span class="material-icons-round"> check_circle_outline </span>
               <span class="material-icons-round"> highlight_off </span>
             </div>
           </article>
         </div>
-        <form action="" class="pendings__form">
-          <button class="btn btn-round pendings__addBtn">+</button>
+        <form action="" class="to-do__form">
+          <button class="btn btn-round to-do__addBtn">+</button>
           <input
             type="text"
             placeholder="Add a new Task..."
-            class="pendings__input"
+            class="to-do__input"
           />
         </form>
       </section>
@@ -94,13 +94,20 @@
         <h3>Completed Tasks</h3>
         <section class="completeds__list">
           <article class="completeds__task">
-            <span></span>
+            <span class="material-icons-round"> done </span>
+            <p>Limpiar los platos</p>
+          </article>
+          <article class="completeds__task">
+            <span class="material-icons-round"> done </span>
             <p>Limpiar los platos</p>
           </article>
         </section>
         <div class="completeds__form">
-          <button class="btn btn-round completeds_deleteBtn"></button>
-          <p>Delete all completed Tasks</p>
+          <button class="btn completeds_deleteBtn">
+            <span class="material-icons-round"> delete_forever </span>
+              <p>Delete all completed Tasks</p>
+          </button>
+          
         </div>
       </section>
     </main>
