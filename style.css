@@ -7,9 +7,9 @@
 
 /* VARIABLES-------------------------------------------------- */
 :root {
-  --color-primary: #7E9FCE;
+  --color-primary: #7e9fce;
   --color-secondary: #e8e8e8;
-  --color-tertiary: #F3F5F8;
+  --color-tertiary: #f3f5f8;
   --color-grey: #61646e;
   --font-roboto: "Roboto", sans-serif;
   --font-robotoCondensed: "Roboto Condensed", sans-serif;
@@ -17,7 +17,7 @@
     -2px -2px 2px rgb(255, 255, 255, 0.25);
   --innerShadow: inset 2px 2px 2px rgb(0, 0, 0, 0.25),
     inset -2px -2px 2px rgb(255, 255, 255, 0.25);
-    --width-completeds: 33vw;
+  --width-completeds: 33vw;
 }
 
 /* BUTTONS---------------------------------------------------------- */
@@ -27,6 +27,7 @@
   box-shadow: var(--shadow);
   background-color: inherit;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn-round {
@@ -36,26 +37,34 @@
 }
 
 .header__menuBtn {
-    background-color: inherit;
-    color: var(--color-tertiary);
-    border: 1px solid var(--color-tertiary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: .2rem;
-    display: none;
+  background-color: inherit;
+  color: var(--color-tertiary);
+  border: 1px solid var(--color-tertiary);
+  border-radius: 3px;
+  padding: 0.2rem;
+  display: none;
 }
 
 .header__menuBtn span {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .folders__addBtn,
 .to-do__addBtn {
   background-color: inherit;
-  font-size: 36px;
   font-family: var(--font-roboto);
   color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.folders__addBtn span,
+.to-do__addBtn span {
+  font-size: 1.7rem;
 }
 
 .folders__button--active {
@@ -64,26 +73,27 @@
 
 .folders__deleteBtn,
 .completeds_deleteBtn {
-    padding: .2em .9em .2em .7em;
-    font-size: 14px;
-    font-family: var(--font-robotoCondensed);
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    gap: .5em;
+  padding: 0.2em 0.9em 0.2em 0.7em;
+  font-size: 14px;
+  font-family: var(--font-robotoCondensed);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .completeds_deleteBtn {
-    background-color: #fff;
-    color: black;
+  background-color: #fff;
+  color: black;
 }
 
 .completeds_deleteBtn span {
-    color: #ff0000d8;
+  color: #ff0000d8;
 }
 
 .material-icons-round {
-    font-size: 18px;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 /* INPUTS--------------------------------------------------- */
@@ -105,11 +115,6 @@ input:focus {
 input::placeholder {
   color: var(--color-grey);
   font-weight: 300;
-}
-
-.folders__input::placeholder {
-    color: rgb(78, 78, 94);
-    font-weight: 300;
 }
 
 /* BODY------------------------------------------------------ */
@@ -152,9 +157,13 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 1rem .6rem;
+  gap: 1rem 0.6rem;
   padding: 0.5rem;
+  overflow: auto;
+}
 
+.folders__list::-webkit-scrollbar {
+  display: none;
 }
 
 .folders__button {
@@ -164,7 +173,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .7rem;
+  gap: 0.7rem;
 }
 
 .folders__button h4 {
@@ -191,117 +200,212 @@ body {
   margin-left: 0.5rem;
 }
 
-
-
-
 /* MAIN----------------------------------------- */
 
 .main {
-    height: 100vh;
-    padding: 0.5rem 2.5vw;
-    /* color: var(--color-primary); */
-    background-color: var(--color-tertiary);
+  height: 100vh;
+  padding: 0.5rem 2.5vw;
+  /* color: var(--color-primary); */
+  background-color: var(--color-tertiary);
 }
 
 .main__title {
-    height: 9vh;
-    display: flex;
-    align-items: center;
-    margin-bottom: 6vh;
+  height: 9vh;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6vh;
 }
 
 .main__title h2 {
-    font-size: 2em;
-    font-family: var(--font-roboto);
-    margin-right: 1.5rem;
+  font-size: 2em;
+  font-family: var(--font-roboto);
+  margin-right: 1.5rem;
+  color: var(--color-primary);
 }
 
+/* TO-DO TASKS------------------------------------------------- */
 .to-do {
-    height: calc(100% - 16vh);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 3vh;
-    width: calc(105% - var(--width-completeds));
+  height: calc(100% - 16vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3vh;
+  width: calc(105% - var(--width-completeds));
 }
 
 .to-do__list {
-    height: calc(100% - 12vh);
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
+  height: calc(99% - 12vh);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: auto;
+  padding-left: 0.5rem;
+  direction: rtl;
 }
 
+.to-do__list::-webkit-scrollbar {
+  width: 3px;
+}
+
+.to-do__list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
 
 .to-do__task {
-    background-color: #fff;
-    font-style: italic;
-    padding: .3rem .6rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #fff;
+  font-style: italic;
+  padding: 0.3rem 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+  direction: ltr;
 }
 
 .to-do__icons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2px;
 }
-    
 
-.to-do__form{
-    height: 12vh;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
+.to-do__form {
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
 }
 
 .to-do__input {
-    width: calc(100% - 4rem);
-    margin-left: 0.5rem;
+  width: calc(100% - 4rem);
+  margin-left: 0.5rem;
 }
 
+/* COMPLETED tASKS---------------------------------------- */
 .completeds {
-    background-color: var(--color-secondary);
-    position: absolute;
-    max-height: 70vh;
-    width: var(--width-completeds);
-    top: 15vh;
-    right: -5vw;
-    padding: 2rem 7vw 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 15px;
-    box-shadow: var(--innerShadow);
+  background-color: var(--color-secondary);
+  position: absolute;
+  max-height: 70vh;
+  width: var(--width-completeds);
+  top: 15vh;
+  right: -5vw;
+  padding: 2rem 7vw 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 15px;
+  box-shadow: var(--innerShadow);
+}
+
+.completeds h3 {
+  color: var(--color-primary);
 }
 
 .completeds__list {
-    height: 100%;
-    align-content: flex-start;
-    margin: 1.5rem 0;
-    padding-left: .5rem;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
+  height: 100%;
+  align-content: flex-start;
+  margin: 1.5rem 0;
+  padding-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: auto;
+}
+
+.completeds__list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.completeds__list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
 }
 
 .completeds__task {
-    width: 100%;
-    display: flex;
-    gap: .4rem;
-    font-style: italic;
-    align-items: center;
-    font-size: 15px;
+  width: 100%;
+  display: flex;
+  gap: 0.4rem;
+  font-style: italic;
+  align-items: center;
+  font-size: 15px;
 }
 
 .completeds__task span {
-    font-size: 14px;
+  font-size: 14px;
+  color: var(--color-primary);
 }
 
 .completeds__form {
-    display: flex;
-    align-items: center;
-    margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+/* MOBILE STYLE--------------------------------------- */
+
+@media screen and (max-width: 601px) {
+  /* BODY--------------------------------- */
+  body {
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  /* HEADER-------------------------------- */
+  .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+    height: 10vh;
+    padding: 0.5rem 2rem;
+    overflow: hidden;
+    z-index: 9;
+  }
+
+  .header__menuBtn {
+    display: block;
+  }
+
+  /* MAIN----------------------------------------- */
+
+  .main {
+    height: auto;
+    padding: 0.5rem 2rem;
+    /* z-index: 9; */
+  }
+
+  .main__title {
+    margin-bottom: 1.5rem;
+  }
+
+  /* TO-DO TASKS------------------------------------------------- */
+  .to-do {
+    max-height: 50vh;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .to-do__list {
+    height: auto;
+  }
+
+  .to-do__list::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  .to-do__form {
+    height: auto;
+  }
+
+
+
+  /* COMPLETED tASKS---------------------------------------- */
+.completeds {
+    background-color: var(--color-secondary);
+    position: static;
+    max-height: 50vh;
+    width: 100%;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
 }
