@@ -36,6 +36,12 @@
   height: 3rem;
 }
 
+.btn-rounded {
+  border-radius: 50px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
 .header__menuBtn {
   background-color: inherit;
   color: var(--color-tertiary);
@@ -119,7 +125,7 @@ input::placeholder {
 
 /* BODY------------------------------------------------------ */
 body {
-  background-color: #fff;
+  background-color: var(--color-tertiary);
   display: grid;
   grid-template-columns: 24vw 1fr;
   font-family: var(--font-robotoCondensed);
@@ -174,11 +180,16 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 0.7rem;
+  max-width: 100%;
 }
 
 .folders__button h4 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .folders__button p {
   font-size: 12px;
@@ -207,6 +218,7 @@ body {
   padding: 0.5rem 2.5vw;
   /* color: var(--color-primary); */
   background-color: var(--color-tertiary);
+  color: var(--color-grey);
 }
 
 .main__title {
@@ -214,13 +226,17 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 6vh;
+  gap: 1.5rem;
 }
 
 .main__title h2 {
   font-size: 2em;
   font-family: var(--font-roboto);
-  margin-right: 1.5rem;
-  color: var(--color-primary);
+  /* color: var(--color-primary); */
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* TO-DO TASKS------------------------------------------------- */
@@ -342,24 +358,32 @@ body {
   margin-top: 1.5rem;
 }
 
-/* MOBILE STYLE--------------------------------------- */
+/* MOBILE STYLES------------------------------------------------- */
 
 @media screen and (max-width: 601px) {
   /* BODY--------------------------------- */
   body {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100vw;
     overflow: visible;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
   }
 
   /* HEADER-------------------------------- */
   .header {
-      position: absolute;
-      top: 0;
-      left: 0;
-    height: 10vh;
+    /* position: fixed;
+    top: 0;
+    left: 0; */
+    height: 11vh;
     padding: 0.5rem 2rem;
     overflow: hidden;
     z-index: 9;
+  }
+
+  .header--show {
+    height: 100vh;
   }
 
   .header__menuBtn {
@@ -370,16 +394,22 @@ body {
 
   .main {
     height: auto;
-    padding: 0.5rem 2rem;
-    /* z-index: 9; */
+    padding: 2rem;
+    /* margin-top: 10vh; */
   }
 
   .main__title {
+    font-size: 0.9rem;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    height: auto;
+    padding-bottom: 0.2rem;
   }
 
-  /* TO-DO TASKS------------------------------------------------- */
+  /* TO-DO TASKS----------------------------------- */
   .to-do {
+    height: auto;
     max-height: 50vh;
     width: 100%;
     margin-bottom: 3rem;
@@ -397,10 +427,8 @@ body {
     height: auto;
   }
 
-
-
-  /* COMPLETED tASKS---------------------------------------- */
-.completeds {
+  /* COMPLETED tASKS-------------------------------- */
+  .completeds {
     background-color: var(--color-secondary);
     position: static;
     max-height: 50vh;
