@@ -334,7 +334,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .completeds__list::-webkit-scrollbar {
