@@ -1,12 +1,18 @@
 const $Main = document.querySelector(".main");
 const $MenuBtn = document.querySelector(".header__menuBtn");
 const $Header = document.querySelector(".header");
+
 const $FoldersList = document.querySelector(".folders__list");
-// const $
-const $TodoList = document.querySelector(".to-do__list");
-const $CompletedsList = document.querySelector(".completeds__list");
+const $FolderForm = document.querySelector(".folders__form");
 const $DeleteFolderBtn = document.querySelector(".folders__deleteBtn");
+const $todoIcons = document.querySelectorAll(".to-do__icons");
+// const $
 const $TaskTitle = document.querySelector(".main__title");
+const $TodoList = document.querySelector(".to-do__list");
+const $TaskForm = document.querySelector(".to-do__form");
+
+const $CompletedsList = document.querySelector(".completeds__list");
+const $CompletedsForm = document.querySelector(".completeds__form");
 
 let URL_Folders = "https://apiserver-todolist.herokuapp.com/api/carpetas";
 let URL_Tasks = "https://apiserver-todolist.herokuapp.com/api/tareas";
@@ -38,7 +44,35 @@ document.addEventListener("click", async (e) => {
     e.target.matches(".folders__deleteBtn *")
   ) {
     await deleteFolder();
-    loadInit()
+  }
+});
+
+$FolderForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  let newFolder = document.querySelector(".folders__input").value;
+  await createFolder(newFolder);
+  $FolderForm.reset();
+});
+
+$TaskForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  let newTask = document.querySelector(".to-do__input").value;
+  let folderId = $TaskTitle.firstElementChild.dataset.id;
+  console.log(newTask);
+  console.log(folderId);
+  await createTask(newTask, folderId);
+  $TaskForm.reset();
+});
+
+document.addEventListener("click", async (e) => {
+  if (e.target.innerText == "highlight_off") {
+    let taskId = e.target.parentElement.dataset.id;
+    await deleteTask(taskId);
+  }
+
+  if (e.target.innerText == "check_circle_outline") {
+    let taskId = e.target.parentElement.dataset.id;
+    await changeStatus(taskId);
   }
 });
 
@@ -46,11 +80,11 @@ const toggleMenu = () => {
   $Header.classList.toggle("header--show");
 };
 
-const loadInit = async () => {
+const loadInit = async (folderId = 0) => {
   await getAllFolders();
   await getAllTasks();
   printFolders();
-  printTasks();
+  printTasks(folderId);
 };
 
 const getAllFolders = async () => {
@@ -99,7 +133,8 @@ const printTasks = (folderId = 0) => {
   $CompletedsList.innerHTML = "";
 
   if (folderId == "0") {
-    $TaskTitle.innerHTML = `<h2>All Tasks</h2>`;
+    $TaskTitle.innerHTML = `<h2 data-id="0">All Tasks</h2>`;
+    $TaskForm.innerHTML = ''
     AllTasks.forEach((task) => {
       task.status == false ? todoTasks.push(task) : completedTasks.push(task);
     });
@@ -107,36 +142,60 @@ const printTasks = (folderId = 0) => {
     let folder = AllFolders.find((el) => el._id === folderId);
 
     $TaskTitle.innerHTML = `
-        <h2 data-id="${folderId}" >${folder.name}</h2>
+        <h2 data-id="${folder._id}" >${folder.name}</h2>
         <button class="btn folders__deleteBtn">
             <span class="material-icons-round"> delete_forever </span>
-            Delete folder
+            <p>Delete folder</p>
         </button>`;
+
+    $TaskForm.innerHTML = `
+      <button class="btn btn-round to-do__addBtn">
+        <span class="material-icons-round"> add </span>
+      </button>
+      <input
+        type="text"
+        placeholder="Add a new Task..."
+        class="to-do__input"
+      />`;
 
     folder.tasks.forEach((task) => {
       task.status == false ? todoTasks.push(task) : completedTasks.push(task);
     });
   }
 
-  todoTasks.forEach((task) => {
-    $TodoList.innerHTML += `
+  if (todoTasks.length == 0) {
+    $TodoList.innerHTML = `<article class="to-do__task">💪 You don't have to-do tasks!!!!</article>`;
+  } else {
+    todoTasks.forEach((task) => {
+      $TodoList.innerHTML += `
       <article class="to-do__task">
           <p>${task.name}</p>
-          <div class="to-do__icons">
+          <div class="to-do__icons" data-id="${task._id}">
               <span class="material-icons-round"> check_circle_outline </span>
               <span class="material-icons-round"> highlight_off </span>
           </div>
-      </article>
-    `;
-  });
-  completedTasks.forEach((task) => {
-    $CompletedsList.innerHTML += `
+      </article>`;
+    });
+  }
+
+  if (completedTasks.length == 0) {
+    $CompletedsList.innerHTML = `<article class="completeds__task">You don't have any completed tasks</article>`;
+    $CompletedsForm.innerHTML = ''
+  } else {
+    $CompletedsForm.innerHTML = `
+      <button class="btn completeds_deleteBtn">
+        <span class="material-icons-round"> delete_forever </span>
+        <p>Delete all completed Tasks</p>
+      </button>`;
+
+    completedTasks.forEach((task) => {
+      $CompletedsList.innerHTML += `
       <article class="completeds__task">
           <span class="material-icons-round"> done </span>
           <p>${task.name}</p>
-      </article>
-    `;
-  });
+      </article>`;
+    });
+  }
 
   let r = [...document.querySelectorAll(".folders__button")];
   r.forEach((el) => el.classList.remove("folders__button--active"));
@@ -148,12 +207,75 @@ const printTasks = (folderId = 0) => {
 const deleteFolder = async () => {
   let folderId = $TaskTitle.firstElementChild.dataset.id;
 
-  await fetch(
-    `https://apiserver-todolist.herokuapp.com/api/carpetas/${folderId}`,
-    {
-      method: "DELETE",
-    }
-  )
+  await fetch(`${URL_Folders}/${folderId}`, {
+    method: "DELETE",
+  })
     .then((res) => res.json())
-    .then((json) => console.log(json));
+    .then((json) => console.log(json))
+    .then(() => loadInit());
+};
+
+const deleteTask = async (taskId) => {
+  let folderId = $TaskTitle.firstElementChild.dataset.id;
+
+  fetch(`${URL_Tasks}/${taskId}`, {
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((json) => console.log(json))
+    .then(() => loadInit(folderId));
+};
+
+const createFolder = async (newFolder) => {
+  let newFolderBody = {
+    name: newFolder,
+  };
+
+  await fetch(URL_Folders, {
+    method: "POST",
+    body: JSON.stringify(newFolderBody),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => console.log(json))
+    .then(() => loadInit());
+};
+
+const createTask = async (newTask, folderId) => {
+  let newTaskBody = {
+    name: newTask,
+    folder: folderId,
+  };
+
+  await fetch(URL_Tasks, {
+    method: "POST",
+    body: JSON.stringify(newTaskBody),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => console.log(json))
+    .then(() => loadInit(folderId));
+};
+
+const changeStatus = async (taskId) => {
+  let folderId = $TaskTitle.firstElementChild.dataset.id;
+
+  let newState = {
+    status: true,
+  };
+
+  await fetch(`${URL_Tasks}/${taskId}`, {
+    method: "PUT",
+    body: JSON.stringify(newState),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => console.log(json))
+    .then(() => loadInit(folderId));
 };

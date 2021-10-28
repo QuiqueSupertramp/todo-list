@@ -5,6 +5,11 @@
   padding: 0;
 }
 
+.to-do__task p,
+.completeds__task p {
+  word-break: break-word;
+}
+
 /* VARIABLES-------------------------------------------------- */
 :root {
   --color-primary: #7e9fce;
@@ -19,6 +24,7 @@
     inset -2px -2px 2px rgb(255, 255, 255, 0.25);
   --width-completeds: 33vw;
 }
+
 
 /* BUTTONS---------------------------------------------------------- */
 .btn {
@@ -125,9 +131,10 @@ input::placeholder {
 
 /* BODY------------------------------------------------------ */
 body {
+  width: 100vw;
   background-color: var(--color-tertiary);
   display: grid;
-  grid-template-columns: 24vw 1fr;
+  grid-template-columns: 24vw 76vw;
   font-family: var(--font-robotoCondensed);
   overflow: hidden;
 }
@@ -230,6 +237,7 @@ body {
 }
 
 .main__title h2 {
+  max-width: 60%;
   font-size: 2em;
   font-family: var(--font-roboto);
   /* color: var(--color-primary); */
@@ -326,7 +334,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .completeds__list::-webkit-scrollbar {
@@ -360,7 +368,7 @@ body {
 
 /* MOBILE STYLES------------------------------------------------- */
 
-@media screen and (max-width: 601px) {
+@media screen and (max-width: 651px) {
   /* BODY--------------------------------- */
   body {
     grid-template-columns: 100vw;
@@ -401,10 +409,13 @@ body {
   .main__title {
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 1rem;
     height: auto;
     padding-bottom: 0.2rem;
+  }
+
+  .main__title h2 {
+    font-size: 1.8rem;
   }
 
   /* TO-DO TASKS----------------------------------- */
