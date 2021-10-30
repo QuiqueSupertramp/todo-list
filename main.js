@@ -13,6 +13,7 @@ const $TaskForm = document.querySelector(".to-do__form");
 
 const $CompletedsList = document.querySelector(".completeds__list");
 const $CompletedsForm = document.querySelector(".completeds__form");
+const $DeleteCompletedsBtn = document.querySelector(".completeds_deleteBtn");
 
 let URL_Folders = "https://apiserver-todolist.herokuapp.com/api/carpetas";
 let URL_Tasks = "https://apiserver-todolist.herokuapp.com/api/tareas";
@@ -67,12 +68,22 @@ $TaskForm.addEventListener("submit", async (e) => {
 document.addEventListener("click", async (e) => {
   if (e.target.innerText == "highlight_off") {
     let taskId = e.target.parentElement.dataset.id;
+
     await deleteTask(taskId);
   }
 
   if (e.target.innerText == "check_circle_outline") {
     let taskId = e.target.parentElement.dataset.id;
     await changeStatus(taskId);
+  }
+});
+
+$CompletedsForm.addEventListener("click", (e) => {
+  if (
+    e.target.matches(".completeds_deleteBtn") ||
+    e.target.matches(".completeds_deleteBtn *")
+  ) {
+    deleteAllCompletedTasks();
   }
 });
 
@@ -134,7 +145,7 @@ const printTasks = (folderId = 0) => {
 
   if (folderId == "0") {
     $TaskTitle.innerHTML = `<h2 data-id="0">All Tasks</h2>`;
-    $TaskForm.innerHTML = ''
+    $TaskForm.innerHTML = "";
     AllTasks.forEach((task) => {
       task.status == false ? todoTasks.push(task) : completedTasks.push(task);
     });
@@ -180,7 +191,7 @@ const printTasks = (folderId = 0) => {
 
   if (completedTasks.length == 0) {
     $CompletedsList.innerHTML = `<article class="completeds__task">You don't have any completed tasks</article>`;
-    $CompletedsForm.innerHTML = ''
+    $CompletedsForm.innerHTML = "";
   } else {
     $CompletedsForm.innerHTML = `
       <button class="btn completeds_deleteBtn">
@@ -192,7 +203,7 @@ const printTasks = (folderId = 0) => {
       $CompletedsList.innerHTML += `
       <article class="completeds__task">
           <span class="material-icons-round"> done </span>
-          <p>${task.name}</p>
+          <p data-id="${task._id}">${task.name}</p>
       </article>`;
     });
   }
@@ -278,4 +289,15 @@ const changeStatus = async (taskId) => {
     .then((res) => res.json())
     .then((json) => console.log(json))
     .then(() => loadInit(folderId));
+};
+
+const deleteAllCompletedTasks = () => {
+  let $CompletedTasks = document.querySelectorAll(".completeds__task");
+
+  console.log($CompletedTasks);
+  $CompletedTasks.forEach((el) => {
+    let taskId = el.lastElementChild.dataset.id;
+    console.log(taskId);
+    deleteTask(taskId);
+  });
 };
