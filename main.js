@@ -6,7 +6,7 @@ const $FoldersList = document.querySelector(".folders__list");
 const $FolderForm = document.querySelector(".folders__form");
 const $DeleteFolderBtn = document.querySelector(".folders__deleteBtn");
 const $todoIcons = document.querySelectorAll(".to-do__icons");
-// const $
+
 const $TaskTitle = document.querySelector(".main__title");
 const $TodoList = document.querySelector(".to-do__list");
 const $TaskForm = document.querySelector(".to-do__form");
@@ -39,46 +39,42 @@ $FoldersList.addEventListener("click", (e) => {
   folderId ? (printTasks(folderId), toggleMenu()) : null;
 });
 
-document.addEventListener("click", async (e) => {
-  if (
-    e.target.matches(".folders__deleteBtn") ||
-    e.target.matches(".folders__deleteBtn *")
-  ) {
-    await deleteFolder();
-  }
-});
-
 $FolderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   let newFolder = document.querySelector(".folders__input").value;
-  await createFolder(newFolder);
   $FolderForm.reset();
+  await createFolder(newFolder);
 });
 
 $TaskForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   let newTask = document.querySelector(".to-do__input").value;
   let folderId = $TaskTitle.firstElementChild.dataset.id;
-  console.log(newTask);
-  console.log(folderId);
-  await createTask(newTask, folderId);
   $TaskForm.reset();
+  await createTask(newTask, folderId);
 });
 
 document.addEventListener("click", async (e) => {
   if (e.target.innerText == "highlight_off") {
     let taskId = e.target.parentElement.dataset.id;
+    let folderId = $TaskTitle.firstElementChild.dataset.id;
 
     await deleteTask(taskId);
+    loadInit(folderId);
   }
 
   if (e.target.innerText == "check_circle_outline") {
     let taskId = e.target.parentElement.dataset.id;
     await changeStatus(taskId);
   }
-});
 
-$CompletedsForm.addEventListener("click", (e) => {
+  if (
+    e.target.matches(".folders__deleteBtn") ||
+    e.target.matches(".folders__deleteBtn *")
+  ) {
+    await deleteFolder();
+  }
+
   if (
     e.target.matches(".completeds_deleteBtn") ||
     e.target.matches(".completeds_deleteBtn *")
@@ -91,11 +87,20 @@ const toggleMenu = () => {
   $Header.classList.toggle("header--show");
 };
 
+const loader = () => {
+  let loader = document.querySelector(".loader");
+  $Main.classList.toggle("opac");
+  $Header.classList.toggle("opac");
+  loader.classList.toggle("loader--active");
+};
+
 const loadInit = async (folderId = 0) => {
+  loader();
   await getAllFolders();
   await getAllTasks();
   printFolders();
   printTasks(folderId);
+  loader();
 };
 
 const getAllFolders = async () => {
@@ -108,7 +113,7 @@ const getAllFolders = async () => {
     });
 };
 
-const printFolders = (folderId = "0") => {
+const printFolders = () => {
   $FoldersList.innerHTML = `
     <div class="btn btn-rounded folders__button" data-id="0" data-name="All">
         <h4 class="folder-title" data-id="0" data-name="All">Show All Tasks</h4>
@@ -132,7 +137,6 @@ const getAllTasks = async () => {
     .then((res) => res.json())
     .then((json) => {
       AllTasks.push(...json);
-      //   console.log(AllTasks);
     });
 };
 
@@ -142,6 +146,12 @@ const printTasks = (folderId = 0) => {
 
   $TodoList.innerHTML = "";
   $CompletedsList.innerHTML = "";
+
+  let r = [...document.querySelectorAll(".folders__button")];
+  r.forEach((el) => el.classList.remove("folders__button--active"));
+  r.find((el) => el.dataset.id == folderId).classList.add(
+    "folders__button--active"
+  );
 
   if (folderId == "0") {
     $TaskTitle.innerHTML = `<h2 data-id="0">All Tasks</h2>`;
@@ -207,12 +217,6 @@ const printTasks = (folderId = 0) => {
       </article>`;
     });
   }
-
-  let r = [...document.querySelectorAll(".folders__button")];
-  r.forEach((el) => el.classList.remove("folders__button--active"));
-  r.find((el) => el.dataset.id == folderId).classList.add(
-    "folders__button--active"
-  );
 };
 
 const deleteFolder = async () => {
@@ -227,14 +231,11 @@ const deleteFolder = async () => {
 };
 
 const deleteTask = async (taskId) => {
-  let folderId = $TaskTitle.firstElementChild.dataset.id;
-
-  fetch(`${URL_Tasks}/${taskId}`, {
+  await fetch(`${URL_Tasks}/${taskId}`, {
     method: "DELETE",
   })
     .then((res) => res.json())
-    .then((json) => console.log(json))
-    .then(() => loadInit(folderId));
+    .then((json) => console.log(json));
 };
 
 const createFolder = async (newFolder) => {
@@ -293,11 +294,12 @@ const changeStatus = async (taskId) => {
 
 const deleteAllCompletedTasks = () => {
   let $CompletedTasks = document.querySelectorAll(".completeds__task");
+  let folderId = $TaskTitle.firstElementChild.dataset.id;
 
-  console.log($CompletedTasks);
-  $CompletedTasks.forEach((el) => {
+  $CompletedTasks.forEach(async (el) => {
     let taskId = el.lastElementChild.dataset.id;
-    console.log(taskId);
-    deleteTask(taskId);
+    await deleteTask(taskId);
   });
+
+  loadInit(folderId);
 };

@@ -26,6 +26,21 @@
 }
 
 
+/* LOADER */
+.loader {
+  position: absolute;
+  top:calc(50% - 100px);
+  left:calc(50% - 100px);
+  display:none;
+}
+
+.loader--active {
+  display: block;
+}
+
+
+
+
 /* BUTTONS---------------------------------------------------------- */
 .btn {
   border: none;
@@ -137,6 +152,10 @@ body {
   grid-template-columns: 24vw 76vw;
   font-family: var(--font-robotoCondensed);
   overflow: hidden;
+}
+
+.opac {
+  opacity: 0.4;
 }
 
 /* HEADER --------------------------------------------------*/
@@ -330,7 +349,7 @@ body {
   height: 100%;
   align-content: flex-start;
   margin: 1.5rem 0;
-  padding-left: 0.5rem;
+  padding: .2rem .5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
