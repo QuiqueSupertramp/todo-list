@@ -243,6 +243,11 @@ body {
 .folders__input {
   width: calc(100% - 4rem);
   margin-left: 0.5rem;
+  border-bottom: 1px solid var(--color-secondary);
+}
+
+.folders__input::placeholder {
+  color: var(--color-secondary);
 }
 
 /* MAIN----------------------------------------- */
