@@ -1,10 +1,13 @@
+// URLs API
 let URL_Folders = "https://apiserver-todolist.herokuapp.com/api/carpetas";
 let URL_Tasks = "https://apiserver-todolist.herokuapp.com/api/tareas";
 
+// ARRAYS
 let AllFolders = [];
 let AllTasks = [];
 
 
+// FUNCTIONS
 export const loadInit = async (folderId = 0) => {
     loader();
     await getAllFolders();
@@ -31,7 +34,11 @@ const getAllFolders = async () => {
     .then((json) => {
       AllFolders.push(...json);
       printFolders();
-    });
+    })
+    .catch(error => {
+      alert(error.text || "Something goes wrong. Folders can't be loaded")
+      loadInit()
+    })
 };
 
 const printFolders = () => {
@@ -60,7 +67,11 @@ const getAllTasks = async () => {
     .then((res) => res.json())
     .then((json) => {
       AllTasks.push(...json);
-    });
+    })
+    .catch(error => {
+      alert(error.text || "Something goes wrong. Tasks can't be loaded")
+      loadInit()
+    })
 };
 
 export const printTasks = (folderId = 0) => {

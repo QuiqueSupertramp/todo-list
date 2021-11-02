@@ -1,8 +1,11 @@
 import { loadInit } from "./loadInit.js";
 
+// URLs API
 let URL_Folders = "https://apiserver-todolist.herokuapp.com/api/carpetas";
 let URL_Tasks = "https://apiserver-todolist.herokuapp.com/api/tareas";
 
+
+// FUNCTIONS
 export const deleteFolder = async () => {
   let $TaskTitle = document.querySelector(".main__title");
   let folderId = $TaskTitle.firstElementChild.dataset.id;
@@ -11,15 +14,25 @@ export const deleteFolder = async () => {
     method: "DELETE",
   })
     .then((res) => res.json())
-    .then(() => loadInit());
+    .then(() => loadInit())
+    .catch((error) => {
+      alert(error.text || "Something goes wrong. Folder can't be deleted");
+      loadInit(folderId);
+    });
 };
 
 export const deleteTask = async (taskId) => {
+  let folderId = $TaskTitle.firstElementChild.dataset.id;
+
   await fetch(`${URL_Tasks}/${taskId}`, {
     method: "DELETE",
   })
     .then((res) => res.json())
-    .then((json) => console.log(json));
+    .then((json) => console.log(json))
+    .catch((error) => {
+      alert(error.text || "Something goes wrong. Task can't be deleted");
+      loadInit(folderId);
+    });
 };
 
 export const createFolder = async (newFolder) => {
@@ -35,7 +48,11 @@ export const createFolder = async (newFolder) => {
     },
   })
     .then((res) => res.json())
-    .then((json) => loadInit(json.data._id));
+    .then((json) => loadInit(json.data._id))
+    .catch((error) => {
+      alert(error.text || "Something goes wrong. Folder can't be created");
+      loadInit();
+    });
 };
 
 export const createTask = async (newTask, folderId) => {
@@ -52,8 +69,11 @@ export const createTask = async (newTask, folderId) => {
     },
   })
     .then((res) => res.json())
-    .then((json) => console.log(json))
-    .then(() => loadInit(folderId));
+    .then(() => loadInit(folderId))
+    .catch((error) => {
+      alert(error.text || "Something goes wrong. Task can't be created");
+      loadInit(folderId);
+    });
 };
 
 export const changeStatus = async (taskId) => {
@@ -72,8 +92,11 @@ export const changeStatus = async (taskId) => {
     },
   })
     .then((res) => res.json())
-    .then((json) => console.log(json))
-    .then(() => loadInit(folderId));
+    .then(() => loadInit(folderId))
+    .catch((error) => {
+      alert(error.text || "Something goes wrong. Status can't be changed");
+      loadInit(folderId);
+    });
 };
 
 export const deleteAllCompletedTasks = () => {
