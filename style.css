@@ -31,11 +31,15 @@
   position: absolute;
   top:calc(50% - 100px);
   left:calc(50% - 100px);
-  display:none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: c;
+  gap: 1rem;
 }
 
 .loader--active {
-  display: block;
+  display: none;
 }
 
 
@@ -107,11 +111,8 @@
   display: flex;
   align-items: center;
   gap: 0.5em;
-}
+  color: var(--color-grey)
 
-.completeds_deleteBtn {
-  background-color: #fff;
-  color: black;
 }
 
 .completeds_deleteBtn span {
@@ -192,6 +193,7 @@ body {
   gap: 1rem 0.6rem;
   padding: 0.5rem;
   overflow: auto;
+  text-transform: capitalize;
 }
 
 .folders__list::-webkit-scrollbar {
@@ -304,6 +306,7 @@ body {
   align-items: center;
   gap: 0.7rem;
   direction: ltr;
+  text-transform: capitalize;
 }
 
 .to-do__icons {
@@ -372,6 +375,7 @@ body {
   font-style: italic;
   align-items: center;
   font-size: 15px;
+  text-transform: capitalize;
 }
 
 .completeds__task span {
@@ -411,6 +415,7 @@ body {
 
   .header--show {
     height: 100vh;
+    transition: height .3s ease-in-out;
   }
 
   .header__menuBtn {
