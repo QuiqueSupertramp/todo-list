@@ -414,12 +414,16 @@ body {
   }
 
   .header--show {
-    height: 100vh;
+    height: auto;
     transition: height .3s ease-in-out;
   }
 
   .header__menuBtn {
     display: block;
+  }
+
+  .folders__list {
+    height: auto;
   }
 
   /* MAIN----------------------------------------- */
