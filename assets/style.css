@@ -11,6 +11,11 @@
   word-break: break-word;
 }
 
+.to-do__task p::first-letter,
+.completeds__task p::first-letter {
+  text-transform: capitalize;
+}
+
 /* VARIABLES-------------------------------------------------- */
 :root {
   --color-primary: #7e9fce;
@@ -432,7 +437,6 @@ body {
           align-items: center;
   gap: 0.7rem;
   direction: ltr;
-  text-transform: capitalize;
 }
 
 .to-do__icons {
@@ -530,7 +534,6 @@ body {
       -ms-flex-align: center;
           align-items: center;
   font-size: 15px;
-  text-transform: capitalize;
 }
 
 .completeds__task span {
