@@ -261,6 +261,7 @@ body {
   padding: 0.5rem;
   overflow: auto;
   text-transform: capitalize;
+  scrollbar-width: none;
 }
 
 .folders__list::-webkit-scrollbar {
@@ -404,6 +405,7 @@ body {
   overflow: auto;
   padding-left: 0.5rem;
   direction: rtl;
+  scrollbar-width: thin;
 }
 
 .to-do__list::-webkit-scrollbar {
@@ -505,6 +507,7 @@ body {
           flex-direction: column;
   gap: 0.5rem;
   overflow: auto;
+  scrollbar-width: thin;
 }
 
 .completeds__list::-webkit-scrollbar {
