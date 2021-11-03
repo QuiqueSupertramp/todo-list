@@ -22,13 +22,13 @@ export const deleteFolder = async () => {
 };
 
 export const deleteTask = async (taskId) => {
+  let $TaskTitle = document.querySelector(".main__title");
   let folderId = $TaskTitle.firstElementChild.dataset.id;
 
   await fetch(`${URL_Tasks}/${taskId}`, {
     method: "DELETE",
   })
     .then((res) => res.json())
-    .then((json) => console.log(json))
     .catch((error) => {
       alert(error.text || "Something goes wrong. Task can't be deleted");
       loadInit(folderId);
