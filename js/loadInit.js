@@ -47,7 +47,7 @@ const printFolders = () => {
   $FoldersList.innerHTML = `
       <div class="btn btn-rounded folders__button" data-id="0" data-name="All">
           <h4 class="folder-title" data-id="0" data-name="All">Show All Tasks</h4>
-          <p>19</p>
+          <p>${AllTasks.length}</p>
       </div>
     `;
 
